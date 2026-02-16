@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useQuestions } from "@/hooks/useQuestions";
 import SubjectFilter from "@/components/SubjectFilter";
 import ImageViewer from "@/components/ImageViewer";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import type { Question } from "@/types";
 
 export default function StudyPage() {
@@ -34,7 +35,7 @@ export default function StudyPage() {
   }
 
   if (loading || !data) {
-    return <div className="text-center py-12 text-gray-400">로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   return (

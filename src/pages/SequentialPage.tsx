@@ -3,6 +3,7 @@ import { useQuestions } from "@/hooks/useQuestions";
 import { useProgress } from "@/context/ProgressContext";
 import QuestionCard from "@/components/QuestionCard";
 import ProgressBar from "@/components/ProgressBar";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function SequentialPage() {
   const { data, loading } = useQuestions();
@@ -53,7 +54,7 @@ export default function SequentialPage() {
   }, [goTo]);
 
   if (loading || !data) {
-    return <div className="text-center py-12 text-gray-400">로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   return (

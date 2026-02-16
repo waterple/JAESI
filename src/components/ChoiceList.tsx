@@ -14,7 +14,7 @@ export default function ChoiceList({
   onSelect,
 }: Props) {
   return (
-    <div className="space-y-2 my-4">
+    <div className="space-y-3 my-4">
       {choices.map((text, i) => {
         const num = i + 1;
         const isSelected = selectedAnswer === num;

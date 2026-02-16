@@ -5,6 +5,7 @@ import { useQuiz } from "@/hooks/useQuiz";
 import { shuffle } from "@/lib/utils";
 import QuestionCard from "@/components/QuestionCard";
 import ProgressBar from "@/components/ProgressBar";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import type { Question } from "@/types";
 
 export default function WrongAnswerPage() {
@@ -41,7 +42,7 @@ export default function WrongAnswerPage() {
   }, [quiz, dispatch]);
 
   if (loading || !data) {
-    return <div className="text-center py-12 text-gray-400">로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   if (wrongQuestions.length === 0) {

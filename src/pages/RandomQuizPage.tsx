@@ -6,6 +6,7 @@ import { shuffle } from "@/lib/utils";
 import QuestionCard from "@/components/QuestionCard";
 import ProgressBar from "@/components/ProgressBar";
 import SubjectFilter from "@/components/SubjectFilter";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import type { Question } from "@/types";
 
 const SIZE_OPTIONS = [
@@ -53,7 +54,7 @@ export default function RandomQuizPage() {
   }, [quiz, dispatch]);
 
   if (loading || !data) {
-    return <div className="text-center py-12 text-gray-400">로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   if (!started) {

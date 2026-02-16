@@ -7,7 +7,7 @@ import {
   type Dispatch,
 } from "react";
 import type { Progress, HistoryEntry } from "@/types";
-import { loadProgress, saveProgress } from "@/lib/storage";
+import { loadProgress, saveProgress, saveProgressImmediate } from "@/lib/storage";
 import { todayStr } from "@/lib/utils";
 
 type Action =
@@ -72,6 +72,12 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     saveProgress(progress);
+  }, [progress]);
+
+  useEffect(() => {
+    const handleUnload = () => saveProgressImmediate(progress);
+    window.addEventListener("beforeunload", handleUnload);
+    return () => window.removeEventListener("beforeunload", handleUnload);
   }, [progress]);
 
   return (

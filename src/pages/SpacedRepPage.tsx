@@ -10,6 +10,7 @@ import {
 import QuestionCard from "@/components/QuestionCard";
 import ConfidenceButtons from "@/components/ConfidenceButtons";
 import ProgressBar from "@/components/ProgressBar";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import type { Confidence, Question } from "@/types";
 
 const MAX_NEW = Infinity;
@@ -56,7 +57,7 @@ export default function SpacedRepPage() {
   );
 
   if (loading || !data) {
-    return <div className="text-center py-12 text-gray-400">로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
   if (queue.length === 0 || !current) {

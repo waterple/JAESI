@@ -5,6 +5,7 @@ import { getDueCards } from "@/lib/spacedRepetition";
 import StatsCard from "@/components/StatsCard";
 import { exportProgress, importProgress } from "@/lib/storage";
 import { useRef } from "react";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function HomePage() {
   const { progress, dispatch } = useProgress();
@@ -12,46 +13,50 @@ export default function HomePage() {
   const fileRef = useRef<HTMLInputElement>(null);
 
   if (loading || !data) {
-    return <div className="text-center py-12 text-gray-400">로딩 중...</div>;
+    return <LoadingSpinner />;
   }
 
-  const { stats, wrongAnswerBook } = progress;
+  const { stats, wrongAnswerBook, sequentialProgress } = progress;
   const accuracy =
     stats.totalAttempts > 0
       ? Math.round((stats.correctCount / stats.totalAttempts) * 100)
       : 0;
   const allIds = data.questions.map((q) => q.id);
   const dueCount = getDueCards(progress, allIds).length;
+  const seqDay1 = sequentialProgress.day1 || 0;
+  const seqDay2 = sequentialProgress.day2 || 0;
+  const seqTotal = seqDay1 + seqDay2;
+  const seqMax = data.meta.totalQuestions;
 
   const modes = [
     {
       to: "/study",
-      title: "암기 모드",
+      title: "📖 암기 모드",
       desc: "문제+답+해설 한눈에 보기",
       color: "bg-teal-500",
     },
     {
       to: "/quiz/random",
-      title: "랜덤 퀴즈",
+      title: "🎲 랜덤 퀴즈",
       desc: "과목별/일차별 필터 + 랜덤 문제",
       color: "bg-blue-500",
     },
     {
       to: "/quiz/spaced",
-      title: "간격 반복",
+      title: "🔄 간격 반복",
       desc: `복습 대기 ${dueCount}문제`,
       color: "bg-green-500",
     },
     {
       to: "/quiz/sequential",
-      title: "순차 학습",
-      desc: "순서대로 풀기",
+      title: "📝 순차 학습",
+      desc: `${seqTotal > 0 ? `${seqTotal}/${seqMax} 진행` : "순서대로 풀기"}`,
       color: "bg-purple-500",
     },
     {
       to: "/wrong-answers",
-      title: "오답노트",
-      desc: `${wrongAnswerBook.length}문제 오답`,
+      title: "❌ 오답노트",
+      desc: `${wrongAnswerBook.length}문제`,
       color: "bg-red-500",
     },
   ];
@@ -86,7 +91,8 @@ export default function HomePage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-1">PseudoANKI</h1>
-      <p className="text-sm text-gray-500 mb-6">21학번 총괄평가 재시험 대비</p>
+      <p className="text-sm text-gray-500 mb-1">21학번 총괄평가 재시험 대비</p>
+      <p className="text-xs text-gray-400 mb-6">총 {data.meta.totalQuestions}문제 (1일차 {data.meta.days[0].questionCount} + 2일차 {data.meta.days[1].questionCount})</p>
 
       <StatsCard
         items={[
@@ -109,6 +115,12 @@ export default function HomePage() {
           </Link>
         ))}
       </div>
+
+      {stats.totalAttempts === 0 && (
+        <p className="text-xs text-center text-gray-400 mb-4">
+          처음이라면 암기 모드로 전체 훑어보기 → 랜덤 퀴즈로 테스트 → 오답노트 복습 순서를 추천합니다
+        </p>
+      )}
 
       <div className="flex gap-2">
         <button

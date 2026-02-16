@@ -17,6 +17,7 @@ export default function ImageViewer({ images }: Props) {
             key={src}
             src={`${import.meta.env.BASE_URL}data/${src}`}
             alt="문제 이미지"
+            loading="lazy"
             className="max-w-full sm:max-w-[300px] rounded border border-gray-200 cursor-pointer"
             onClick={() => setExpanded(src)}
           />

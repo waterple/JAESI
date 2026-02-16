@@ -1,12 +1,12 @@
 import { NavLink, Outlet } from "react-router-dom";
 
 const links = [
-  { to: "/", label: "홈" },
-  { to: "/study", label: "암기" },
-  { to: "/quiz/random", label: "랜덤" },
-  { to: "/quiz/spaced", label: "복습" },
-  { to: "/quiz/sequential", label: "순차" },
-  { to: "/wrong-answers", label: "오답" },
+  { to: "/", label: "홈", icon: "📊" },
+  { to: "/study", label: "암기", icon: "📖" },
+  { to: "/quiz/random", label: "랜덤", icon: "🎲" },
+  { to: "/quiz/spaced", label: "복습", icon: "🔄" },
+  { to: "/quiz/sequential", label: "순차", icon: "📝" },
+  { to: "/wrong-answers", label: "오답", icon: "❌" },
 ] as const;
 
 export default function Layout() {
@@ -23,12 +23,13 @@ export default function Layout() {
               to={l.to}
               end={l.to === "/"}
               className={({ isActive }) =>
-                `flex-1 py-3 text-center text-sm font-medium transition-colors min-h-[48px] flex items-center justify-center ${
-                  isActive ? "text-blue-600 border-t-2 border-blue-600" : "text-gray-500"
+                `flex-1 py-2 text-center text-xs font-medium transition-colors min-h-[48px] flex flex-col items-center justify-center gap-0.5 ${
+                  isActive ? "text-blue-600 border-t-2 border-blue-600 bg-blue-50" : "text-gray-500"
                 }`
               }
             >
-              {l.label}
+              <span className="text-base leading-none">{l.icon}</span>
+              <span>{l.label}</span>
             </NavLink>
           ))}
         </div>
