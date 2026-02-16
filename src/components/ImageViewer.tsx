@@ -15,7 +15,7 @@ export default function ImageViewer({ images }: Props) {
         {images.map((src) => (
           <img
             key={src}
-            src={`/data/${src}`}
+            src={`${import.meta.env.BASE_URL}data/${src}`}
             alt="문제 이미지"
             className="max-w-full sm:max-w-[300px] rounded border border-gray-200 cursor-pointer"
             onClick={() => setExpanded(src)}
@@ -28,7 +28,7 @@ export default function ImageViewer({ images }: Props) {
           onClick={() => setExpanded(null)}
         >
           <img
-            src={`/data/${expanded}`}
+            src={`${import.meta.env.BASE_URL}data/${expanded}`}
             alt="확대 이미지"
             className="max-w-full max-h-full object-contain"
           />
