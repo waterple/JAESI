@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PseudoANKI</title>
+    <script>
+      // GitHub Pages SPA redirect
+      // /JAESI/quiz/random → /JAESI/?p=/quiz/random
+      var seg = 1; // repo name segment count
+      var l = window.location;
+      l.replace(
+        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        l.pathname.split('/').slice(0, 1 + seg).join('/') + '/?p=' +
+        l.pathname.slice(1).split('/').slice(seg).join('/').replace(/&/g, '~and~') +
+        (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash
+      );
+    </script>
+  </head>
+  <body></body>
+</html>

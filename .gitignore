@@ -1,0 +1,7 @@
+node_modules
+dist
+data/*.pdf
+.DS_Store
+*.local
+*.tsbuildinfo
+.claude/

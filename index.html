@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+    />
+    <title>PseudoANKI</title>
+    <script>
+      // GitHub Pages SPA redirect handler
+      (function(){
+        var q = window.location.search;
+        if (q.length > 2 && q.indexOf('p=') > -1) {
+          var params = {};
+          q.slice(1).split('&').forEach(function(s) {
+            var kv = s.split('=');
+            params[kv[0]] = kv.slice(1).join('=').replace(/~and~/g, '&');
+          });
+          var path = params.p ? '/' + params.p : '';
+          var search = params.q ? '?' + params.q : '';
+          var hash = window.location.hash;
+          window.history.replaceState(null, '', '/JAESI' + path + search + hash);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
