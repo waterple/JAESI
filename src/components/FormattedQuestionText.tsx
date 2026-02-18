@@ -26,7 +26,8 @@ export default function FormattedQuestionText({ text }: Props) {
         <div className="mt-2 bg-slate-50 border border-slate-200 rounded-lg divide-y divide-slate-200 overflow-hidden text-sm">
           {labLines.map((line, i) => {
             const trimmed = line.trim();
-            const isHeader = /^\[.+\]$/.test(trimmed);
+            const isHeader =
+              /^\[.+\]$/.test(trimmed) || /^항생제\s*결과/.test(trimmed);
             return (
               <div
                 key={i}

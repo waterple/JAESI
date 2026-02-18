@@ -30,6 +30,10 @@ export function formatLabText(text: string): string {
     /,?\s+(?=동맥혈\s*검사\s*:)/g,
     /,?\s+(?=검사\s*결과\s*:)/g,
     /,?\s+(?=•\s)/g,
+    /,?\s+(?=전해질\s*:)/g,
+    /,?\s+(?=항생제\s*결과)/g,
+    /,?\s+(?=동맥혈가스분석)/g,
+    /,?\s+(?=동맥혈\s*가스\s*:)/g,
   ];
 
   // 2) 대괄호 섹션
@@ -46,7 +50,7 @@ export function formatLabText(text: string): string {
   // 3) 개별 검사 항목 그룹 시작점 (앞에 줄바꿈)
   const labGroupStarters = [
     // CBC (뒤에 숫자가 올 때만 = 검사값 맥락)
-    /,?\s+(?=백혈구\s*:?\s*\d)/g,
+    /,?\s+(?=백혈구\s*(?::?\s*\d|다수|>))/g,
     /,?\s+(?=혈색소\s*:?\s*\d)/g,
     /,?\s+(?=혈소판\s*:?\s*\d)/g,
     /,?\s+(?=적혈구\s*:?\s*\d)/g,
@@ -71,7 +75,7 @@ export function formatLabText(text: string): string {
     /,?\s+(?=지방분해효소)/g,
     // 혈당/대사
     /,?\s+(?=혈당\s*:?\s*\d)/g,
-    /,?\s+(?=공복혈당)/g,
+    /,?\s+(?=공복\s*혈당)/g,
     /,?\s+(?=HbA1[cC])/g,
     // 암모니아
     /,?\s+(?=암모니아)/g,
@@ -98,6 +102,49 @@ export function formatLabText(text: string): string {
     // serum/urine 접두어
     /,?\s+(?=serum\s)/gi,
     /,?\s+(?=urine\s)/gi,
+    // 진단검사 결과
+    /,?\s+(?=내시경\s*:)/g,
+    /,?\s+(?=CT\s*:)/g,
+    // 전해질 복합
+    /,?\s+(?=(?:혈액|혈청)\s*나트륨\/칼륨)/g,
+    /,?\s+(?=나트륨\/칼륨\/클로라이드)/g,
+    // 내분비 패널
+    /,?\s+(?=골연령\s*:)/g,
+    /,?\s+(?=인슐린양성장인자)/g,
+    /,?\s+(?=유리\s*T[34])/g,
+    /,?\s+(?=갑상샘자극호르몬)/g,
+    /,?\s+(?=테스토스테론\s*:?\s*\d)/g,
+    /,?\s+(?=황체형성호르몬)/g,
+    /,?\s+(?=난포자극호르몬)/g,
+    // 폐기능 검사
+    /,?\s+(?=노력성폐활량\s*:)/g,
+    /,?\s+(?=1초간\s*노력성날숨량)/g,
+    /,?\s+(?=폐확산능\s*:)/g,
+    // 지질 패널
+    /,?\s+(?=총콜레스테롤\s*:?\s*\d)/g,
+    /,?\s+(?=중성지방\s*:?\s*\d)/g,
+    /,?\s+(?=고밀도지(?:질)?단백\s*콜레스테롤)/g,
+    /,?\s+(?=저밀도지(?:질)?단백\s*콜레스테롤)/g,
+    // 대사 확장
+    /,?\s+(?=당화혈색소)/g,
+    /,?\s+(?=혈청요소질소)/g,
+    // 쿠싱 워크업
+    /,?\s+(?=8AM\s+ACTH)/g,
+    /,?\s+(?=저용량\s+dexamethasone)/g,
+    /,?\s+(?=24hr\s+urine)/gi,
+    // 소변/배양/항생제 감수성
+    /,?\s+(?=세균\s*(?:다수|:?\s*\d))/g,
+    /,?\s+(?=배양균\s*:)/g,
+    /,?\s+(?=Ampicillin\s+[SR])/gi,
+    /,?\s+(?=Gentamicin\s+[SR])/gi,
+    /,?\s+(?=Amoxicillin\s*\/)/gi,
+    /,?\s+(?=Ciprofloxacin\s+[SR])/gi,
+    /,?\s+(?=Cefazolin\s+[SR])/gi,
+    /,?\s+(?=Imipenem\s+[SR])/gi,
+    /,?\s+(?=Nitrofurantoin\s+[SR])/gi,
+    /,?\s+(?=Piperacillin\s*\/)/gi,
+    /,?\s+(?=Fosfomycin\s+[SR])/gi,
+    /,?\s+(?=Trimethoprim\s*\/)/gi,
   ];
 
   for (const p of [...sectionHeaders, ...bracketedSections, ...labGroupStarters]) {
