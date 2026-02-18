@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useQuestions } from "@/hooks/useQuestions";
 import { useProgress } from "@/context/ProgressContext";
 import {
@@ -22,14 +22,18 @@ export default function SpacedRepPage() {
   const [revealed, setRevealed] = useState(false);
   const [sessionIndex, setSessionIndex] = useState(0);
 
-  const queue = useMemo(() => {
-    if (!data) return [] as Question[];
+  const [queue, setQueue] = useState<Question[]>([]);
+
+  useEffect(() => {
+    if (!data) return;
     const allIds = data.questions.map((q) => q.id);
     const dueIds = getDueCards(progress, allIds);
     const newIds = getNewCards(progress, allIds, MAX_NEW);
     const combined = [...dueIds, ...newIds];
-    return combined.map((id) => data.questions.find((q) => q.id === id)!);
-  }, [data, progress]);
+    setQueue(combined.map((id) => data.questions.find((q) => q.id === id)!));
+    setSessionIndex(0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   const current = queue[sessionIndex] ?? null;
 
