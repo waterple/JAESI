@@ -48,6 +48,18 @@ export function getNewCards(
   return newIds.slice(0, maxNew);
 }
 
+export function getCramCards(progress: Progress, allIds: number[]): number[] {
+  const studied = allIds.filter((id) => !!progress.srData[String(id)]);
+  studied.sort((a, b) => {
+    const ca = progress.srData[String(a)];
+    const cb = progress.srData[String(b)];
+    if (ca.ease !== cb.ease) return ca.ease - cb.ease;
+    if (ca.repetitions !== cb.repetitions) return ca.repetitions - cb.repetitions;
+    return ca.interval - cb.interval;
+  });
+  return studied;
+}
+
 export function getOrCreateCard(progress: Progress, questionId: number): SRCard {
   return progress.srData[String(questionId)] || newCard();
 }

@@ -23,6 +23,9 @@ export default function HomePage() {
       : 0;
   const allIds = data.questions.map((q) => q.id);
   const dueCount = getDueCards(progress, allIds).length;
+  const studiedCount = data.questions.filter(
+    (q) => !!progress.srData[String(q.id)]
+  ).length;
   const seqDay1 = sequentialProgress.day1 || 0;
   const seqDay2 = sequentialProgress.day2 || 0;
   const seqTotal = seqDay1 + seqDay2;
@@ -46,6 +49,15 @@ export default function HomePage() {
       title: "🔄 간격 반복",
       desc: `복습 대기 ${dueCount}문제`,
       color: "bg-green-500",
+    },
+    {
+      to: "/quiz/spaced?cram=1",
+      title: "⚡ 벼락치기",
+      desc:
+        studiedCount > 0
+          ? `${studiedCount}문제 전체 복습`
+          : "학습 기록 없음",
+      color: "bg-amber-500",
     },
     {
       to: "/quiz/sequential",
