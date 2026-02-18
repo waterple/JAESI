@@ -10,7 +10,7 @@ import json
 import re
 import sys
 from pathlib import Path
-from PIL import Image
+from PIL import Image, ImageOps
 import io
 
 # Windows cp949 인코딩 문제 방지
@@ -169,6 +169,12 @@ def save_optimized_image(doc: fitz.Document, xref: int, out_path: Path) -> bool:
         img = Image.open(io.BytesIO(image_bytes))
     except Exception:
         return False
+
+    # EXIF 회전 정보 적용 (폰 카메라 사진 등)
+    try:
+        img = ImageOps.exif_transpose(img)
+    except Exception:
+        pass
 
     # RGBA/P → RGB 변환
     if img.mode in ("RGBA", "P", "LA"):

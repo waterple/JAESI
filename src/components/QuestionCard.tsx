@@ -1,4 +1,5 @@
 import type { Question } from "@/types";
+import { formatLabText } from "@/lib/utils";
 import ImageViewer from "./ImageViewer";
 import ChoiceList from "./ChoiceList";
 import ExplanationPanel from "./ExplanationPanel";
@@ -30,7 +31,7 @@ export default function QuestionCard({
         )}
       </div>
       <p className="text-base font-medium whitespace-pre-line leading-relaxed">
-        {question.questionText}
+        {formatLabText(question.questionText)}
       </p>
       <ImageViewer images={question.images} />
       <ChoiceList
