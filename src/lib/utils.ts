@@ -45,6 +45,12 @@ export function formatLabText(text: string): string {
 
   // 3) 개별 검사 항목 그룹 시작점 (앞에 줄바꿈)
   const labGroupStarters = [
+    // CBC (뒤에 숫자가 올 때만 = 검사값 맥락)
+    /,?\s+(?=백혈구\s*:?\s*\d)/g,
+    /,?\s+(?=혈색소\s*:?\s*\d)/g,
+    /,?\s+(?=혈소판\s*:?\s*\d)/g,
+    /,?\s+(?=적혈구\s*:?\s*\d)/g,
+    /,?\s+(?=뇌압\s*:?\s*\d)/g,
     // 간효소
     /,?\s+(?=AST[/\s:])/g,
     /,?\s+(?=아스파르?트?산?\s*아미노)/g,

@@ -1,5 +1,5 @@
 import type { Question } from "@/types";
-import { formatLabText } from "@/lib/utils";
+import FormattedQuestionText from "./FormattedQuestionText";
 import ImageViewer from "./ImageViewer";
 import ChoiceList from "./ChoiceList";
 import ExplanationPanel from "./ExplanationPanel";
@@ -30,9 +30,7 @@ export default function QuestionCard({
           </span>
         )}
       </div>
-      <p className="text-base font-medium whitespace-pre-line leading-relaxed">
-        {formatLabText(question.questionText)}
-      </p>
+      <FormattedQuestionText text={question.questionText} />
       <ImageViewer images={question.images} />
       <ChoiceList
         choices={question.choices}

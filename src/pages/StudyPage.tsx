@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useQuestions } from "@/hooks/useQuestions";
 import { formatLabText } from "@/lib/utils";
 import SubjectFilter from "@/components/SubjectFilter";
+import FormattedQuestionText from "@/components/FormattedQuestionText";
 import ImageViewer from "@/components/ImageViewer";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import type { Question } from "@/types";
@@ -104,7 +105,7 @@ export default function StudyPage() {
           </div>
 
           <div className="bg-white border border-gray-200 rounded-lg p-4 mb-3">
-            <p className="text-base font-medium whitespace-pre-line leading-relaxed">{formatLabText(current.questionText)}</p>
+            <FormattedQuestionText text={current.questionText} />
             <ImageViewer images={current.images} />
           </div>
 
